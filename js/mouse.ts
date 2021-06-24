@@ -1,7 +1,7 @@
 import config from "./configuration";
 import GameObject from "./gameObject";
 
-export interface Mouse extends GameObject {}
+export class Mouse extends GameObject {}
 
 export const defaultMouse = {
   x: config.MOUSE_CONFIG.MOUSE_STARTING_X,

@@ -1,7 +1,7 @@
 import Game from "./game";
 import GameObject from "./gameObject";
 
-export default class Aliene extends GameObject {
+export default class Alien extends GameObject {
   id: number;
   speed: number;
   movement: number;
