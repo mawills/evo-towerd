@@ -1,15 +1,11 @@
-import Configuration from "./configuration";
+import config from "./configuration";
+import GameObject from "./gameObject";
 
-export default class Mouse {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+export interface Mouse extends GameObject {}
 
-  constructor(config: Configuration) {
-    this.x = config.MOUSE_CONFIG.MOUSE_STARTING_X;
-    this.y = config.MOUSE_CONFIG.MOUSE_STARTING_Y;
-    this.width = config.MOUSE_CONFIG.MOUSE_WIDTH;
-    this.height = config.MOUSE_CONFIG.MOUSE_HEIGHT;
-  }
-}
+export const defaultMouse = {
+  x: config.MOUSE_CONFIG.MOUSE_STARTING_X,
+  y: config.MOUSE_CONFIG.MOUSE_STARTING_Y,
+  width: config.MOUSE_CONFIG.MOUSE_WIDTH,
+  height: config.MOUSE_CONFIG.MOUSE_HEIGHT,
+};

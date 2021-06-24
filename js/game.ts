@@ -1,11 +1,13 @@
 import Cell from "./cell";
-import Mouse from "./mouse";
+import { Mouse, defaultMouse } from "./mouse";
 import Tower from "./tower";
 import Alien from "./alien";
 import Projectile from "./projectile";
-import Configuration from "./configuration";
+import config from "./configuration";
 import FloatingText from "./floatingText";
 import Population from "./population";
+
+type GameObject = Tower | Alien | Projectile;
 
 interface ControlsBar {
   width: number;
@@ -13,7 +15,6 @@ interface ControlsBar {
 }
 
 export default class Game {
-  config: Configuration;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   cellSize: number;
@@ -40,9 +41,7 @@ export default class Game {
   attackWave: Alien[];
   gameStarted: boolean;
 
-  constructor(config: Configuration) {
-    this.config = config;
-
+  constructor() {
     // canvas
     this.canvas = <HTMLCanvasElement>document.getElementById("canvas");
     this.canvas.width = config.CANVAS_WIDTH;
@@ -81,7 +80,7 @@ export default class Game {
       width: this.canvas.width,
       height: this.cellSize,
     };
-    this.mouse = new Mouse(config);
+    this.mouse = { ...defaultMouse, game: this };
     this.towerCost = config.TOWER_COST;
     this.frame = 0;
     this.nextWaveButton = <HTMLButtonElement>(
@@ -113,10 +112,7 @@ export default class Game {
     if (!this.gameOver) requestAnimationFrame(this.animate);
   };
 
-  collisionDetection(
-    first: Tower | Alien | Projectile | Mouse,
-    second: Tower | Alien | Projectile | Mouse
-  ) {
+  collisionDetection(first: Mouse, second: GameObject | Mouse) {
     if (
       first.x >= second.x + second.width ||
       second.x >= first.x + first.width ||
@@ -128,10 +124,7 @@ export default class Game {
     return true;
   }
 
-  calculateDistance(
-    first: Tower | Alien | Projectile,
-    second: Tower | Alien | Projectile
-  ) {
+  calculateDistance(first: GameObject, second: GameObject) {
     const deltaX = Math.abs(first.x - second.x);
     const deltaY = Math.abs(first.y - second.y);
     return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
@@ -244,7 +237,7 @@ export default class Game {
         this.population.population.push(alien);
         this.aliens.delete(key);
       }
-      if (!alien.alive()) {
+      if (!alien.alive) {
         this.aliens.delete(key);
         this.floatingTexts.push(
           new FloatingText(
@@ -306,7 +299,7 @@ export default class Game {
     this.floatingTexts.forEach((floatingText) => {
       floatingText.update();
       floatingText.draw();
-      if (floatingText.lifespan < this.config.FLOATING_TEXT_LIFESPAN) {
+      if (floatingText.lifespan < config.FLOATING_TEXT_LIFESPAN) {
         temp.push(floatingText);
       }
     });

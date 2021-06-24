@@ -1,12 +1,8 @@
 import Game from "./game";
+import GameObject from "./gameObject";
 
-export default class Alien {
-  game: Game;
+export default class Aliene extends GameObject {
   id: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
   speed: number;
   movement: number;
   health: number;
@@ -21,12 +17,8 @@ export default class Alien {
     health: number,
     speed: number
   ) {
-    this.game = game;
+    super(game, game.canvas.width, y, width, height);
     this.id = Math.random();
-    this.x = this.game.canvas.width;
-    this.y = y;
-    this.width = width;
-    this.height = height;
     this.speed = speed;
     this.movement = this.speed;
     this.health = health;
@@ -34,7 +26,7 @@ export default class Alien {
     this.lootValue = 20;
   }
 
-  alive() {
+  get alive() {
     return this.health > 0;
   }
 

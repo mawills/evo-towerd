@@ -1,13 +1,9 @@
 import Projectile from "./projectile";
 import Alien from "./alien";
 import Game from "./game";
+import GameObject from "./gameObject";
 
-export default class Tower {
-  game: Game;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+export default class Tower extends GameObject {
   range: number;
   power: number;
   projectileSpeed: number;
@@ -27,15 +23,7 @@ export default class Tower {
     projectileSpeed: number,
     power: number
   ) {
-    this.game = game;
-
-    // location
-    this.x = x;
-    this.y = y;
-
-    // appearance
-    this.width = width;
-    this.height = height;
+    super(game, x, y, width, height);
 
     // stats
     this.range = range;

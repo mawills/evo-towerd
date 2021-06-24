@@ -1,10 +1,8 @@
 import Game from "./game";
+import GameObject from "./gameObject";
 
-export default class FloatingText {
-  game: Game;
+export default class FloatingText extends GameObject {
   text: string;
-  x: number;
-  y: number;
   size: number;
   color: string;
   lifespan: number;
@@ -18,10 +16,8 @@ export default class FloatingText {
     size: number,
     color: string
   ) {
-    this.game = game;
+    super(game, x, y);
     this.text = text;
-    this.x = x;
-    this.y = y;
     this.size = size;
     this.color = color;
     this.lifespan = 0;

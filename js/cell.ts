@@ -1,18 +1,9 @@
 import Game from "./game";
+import GameObject from "./gameObject";
 
-export default class Cell {
-  game: Game;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-
+export default class Cell extends GameObject {
   constructor(game: Game, x: number, y: number, size: number) {
-    this.game = game;
-    this.x = x;
-    this.y = y;
-    this.width = size;
-    this.height = size;
+    super(game, x, y, size, size);
   }
 
   draw() {
